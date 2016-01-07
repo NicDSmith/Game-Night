@@ -1,20 +1,29 @@
 package com.nicdsmith.test.gamenight;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.IdRes;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
-public class MainActivity extends Activity {
+import java.util.ArrayList;
+
+public class MainActivity extends Activity{
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
+    ArrayList<event> eventsList = new ArrayList<event>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,9 +40,10 @@ public class MainActivity extends Activity {
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         // specify an adapter (see also next example)
-        String [] myDataset = {"Game Night"};
-        mAdapter = new MyAdapter(myDataset);
+        mAdapter = new MyAdapter(eventsList);
         mRecyclerView.setAdapter(mAdapter);
+
+
     }
 
     @Override
@@ -55,6 +65,25 @@ public class MainActivity extends Activity {
             return true;
         }
 
+
         return super.onOptionsItemSelected(item);
     }
+    public void sendMessage(View view){
+        Intent intent = new Intent(this, EventCreationActivity.class);
+        ImageButton fabImageButton = (ImageButton) findViewById(R.id.fab_image_button);
+        startActivity(intent);
+    }
+
+    protected void  onResume(){
+        super.onResume();
+        Intent intent = getIntent();
+        event tempevent = new event(intent.getStringExtra("EXTRA_EVENTTITLE") ,intent.getStringExtra("EXTRA_EVENTDESC"));
+        eventsList.add(tempevent);
+        mAdapter = new MyAdapter(eventsList);
+        mRecyclerView.setAdapter(mAdapter);
+        Log.i("resuming", "onResume: ");
+    }
+
+
+
 }

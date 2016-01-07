@@ -3,4 +3,9 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="title_activity_event_creation">EventCreationActivity</string>
+    <string name="event_title_capture">Event Title</string>
+    <string name="save_event">Save Event</string>
+    <string name="event_desc_capture">Event Description</string>
+
 </resources>

@@ -7,11 +7,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 /**
  * Created by nicsmith on 1/4/16.
  */
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
-    private String[] mDataset;
+    private ArrayList<event> mDataset;
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -26,7 +28,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public MyAdapter(String[] myDataset) {
+    public MyAdapter(ArrayList<event>  myDataset) {
         mDataset = myDataset;
     }
 
@@ -48,17 +50,41 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         // - replace the contents of the view with that element
         Log.i("creating card", "card created");
         TextView tempView = (TextView) holder.cardView.findViewById(R.id.event_title);
-        tempView.setText(mDataset[position]);
-        //tempView = (TextView) holder.cardView.findViewById(R.id.event_desc);
-        //tempView.setText(mDataset[1]);
+        tempView.setText(mDataset.get(position).getEventTitle());
+
+        tempView = (TextView) holder.cardView.findViewById(R.id.event_desc);
+        tempView.setText(mDataset.get(position).getEventDesc());
 
 
     }
 
     // Return the size of your dataset (invoked by the layout manager)
     @Override
-    public int getItemCount() {
-        return mDataset.length;
+    public int getItemCount() {return mDataset.size();
+    }
+}
+class event{
+    String eventTitle;
+    String eventDesc;
+    public event(String eventTitle,String eventDesc){
+        this.eventTitle = eventTitle;
+        this.eventDesc = eventDesc;
+    }
+
+    public String getEventTitle() {
+        return eventTitle;
+    }
+
+    public void setEventTitle(String eventTitle) {
+        this.eventTitle = eventTitle;
+    }
+
+    public String getEventDesc() {
+        return eventDesc;
+    }
+
+    public void setEventDesc(String eventDesc) {
+        this.eventDesc = eventDesc;
     }
 }
 
