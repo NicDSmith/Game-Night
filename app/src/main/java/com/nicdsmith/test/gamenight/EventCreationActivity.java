@@ -31,7 +31,8 @@ public class EventCreationActivity extends AppCompatActivity {
         extras.putString("EXTRA_EVENTDESC",eventDescCapture);
 
         intent.putExtras(extras);
-        startActivity(intent);
+        setResult(RESULT_OK, intent);
+        finish();
     }
 
 }
