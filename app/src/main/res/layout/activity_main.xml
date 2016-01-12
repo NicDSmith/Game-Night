@@ -28,8 +28,8 @@
         android:layout_alignParentBottom="true"
         android:src="@drawable/fab_ic_add"
         android:layout_gravity="bottom|end"
-        app:elevation="4dp"
-        app:pressedTranslationZ="12dp"
+        app:elevation="@dimen/fab_elevation"
+        app:pressedTranslationZ="@dimen/fab_translation"
         android:onClick="sendMessage"/>
 
 

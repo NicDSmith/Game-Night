@@ -28,7 +28,7 @@ public class EventCreationActivity extends AppCompatActivity {
         String eventDescCapture = editText.getText().toString();
 
         extras.putString("EXTRA_EVENTTITLE",eventTitleCapture);
-        extras.putString("EXTRA_EVENTDESC",eventDescCapture);
+        extras.putString("EXTRA_EVENTDESC", eventDescCapture);
 
         intent.putExtras(extras);
         setResult(RESULT_OK, intent);

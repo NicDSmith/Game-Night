@@ -16,13 +16,14 @@ public class MainActivity extends AppCompatActivity{
     private RecyclerView mRecyclerView;
     private RecyclerViewAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
+    private static final String TAG = MainActivity.class.getSimpleName();
 
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.i("mainactivity on create", "onCreate: " + this);
+        Log.i(TAG, "onCreate: " + this);
         setContentView(R.layout.activity_main);
         //sets the recyclerview
         mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);

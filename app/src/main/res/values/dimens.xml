@@ -9,4 +9,6 @@
     <dimen name="elevation_low">1dp</dimen>
     <dimen name="elevation_high">8dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
+    <dimen name="fab_elevation">4dp</dimen>
+    <dimen name="fab_translation">12dp</dimen>
 </resources>

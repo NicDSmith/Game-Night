@@ -16,6 +16,7 @@ import java.util.List;
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
     private List<Event> mDataset;
     List<Event> eventsList = new ArrayList<Event>();
+    private static final String TAG = MainActivity.class.getSimpleName();
 
 
    //class to define out view holder
@@ -53,7 +54,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
-        Log.i("creating card", "card created");
+        Log.i(TAG, "card created");
         //inserts information in to the event title text field on the card\
         Event tempEvent = mDataset.get(position);
         holder.eventTitle.setText(tempEvent.getEventTitle());
@@ -67,7 +68,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
-        Log.i("getItemCount", "item count is " + mDataset.size());
+        Log.i(TAG, "item count is " + mDataset.size());
         return mDataset.size();
     }
 
