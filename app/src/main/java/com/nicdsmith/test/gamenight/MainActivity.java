@@ -12,11 +12,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 
+import java.util.List;
+import java.util.ListIterator;
+
 public class MainActivity extends AppCompatActivity{
     private RecyclerView mRecyclerView;
     private RecyclerViewAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private static final String TAG = MainActivity.class.getSimpleName();
+    private EventDataSource datasource;
 
 
 
@@ -39,6 +43,9 @@ public class MainActivity extends AppCompatActivity{
         mRecyclerView.setAdapter(mAdapter);
 
 
+
+
+
     }
 
     @Override
@@ -49,17 +56,16 @@ public class MainActivity extends AppCompatActivity{
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(requestCode == 0){
-            if(resultCode == RESULT_OK) {
-                //generates a temporary event with the information passes from the other activity
-                Event tempevent = new Event(data.getStringExtra("EXTRA_EVENTTITLE"), data.getStringExtra("EXTRA_EVENTDESC"));
+    protected void onResume() {
+        super.onResume();
+        datasource = new EventDataSource(this);
+        datasource.open();
+        List<Event> eventList = datasource.getAllEvents();
+        mAdapter.setData(eventList);
 
-                //adds the new even to the dataset
-                mAdapter.appendToDataSet(tempevent);
-            }
-        }
+
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

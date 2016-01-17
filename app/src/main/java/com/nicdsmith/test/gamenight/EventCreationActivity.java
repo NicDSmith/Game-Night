@@ -11,6 +11,7 @@ import android.widget.EditText;
 
 public class EventCreationActivity extends AppCompatActivity {
 
+
     Intent intent = getIntent();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,6 +21,15 @@ public class EventCreationActivity extends AppCompatActivity {
     }
     public void saveEvent(View view){
         Intent intent = new Intent(this, MainActivity.class);
+        EditText editText = (EditText) findViewById(R.id.event_title_capture);
+        String eventTitleText = editText.getText().toString();
+
+        editText = (EditText) findViewById(R.id.event_desc_capture);
+        String eventDescText = editText.getText().toString();
+        EventDataSource dataSource = new EventDataSource(this);
+        dataSource.open();
+        dataSource.createEvent(eventTitleText,eventDescText);
+        /*
         Bundle extras = new Bundle();
         EditText editText = (EditText) findViewById(R.id.event_title_capture);
         String eventTitleCapture = editText.getText().toString();
@@ -32,6 +42,7 @@ public class EventCreationActivity extends AppCompatActivity {
 
         intent.putExtras(extras);
         setResult(RESULT_OK, intent);
+        */
         finish();
     }
 

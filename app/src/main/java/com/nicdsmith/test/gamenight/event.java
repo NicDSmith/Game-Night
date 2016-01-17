@@ -7,6 +7,9 @@ package com.nicdsmith.test.gamenight;
 public class Event {
     String eventTitle;
     String eventDesc;
+    long id;
+
+    public Event(){}
     public Event(String eventTitle, String eventDesc){
         this.eventTitle = eventTitle;
         this.eventDesc = eventDesc;
@@ -26,5 +29,13 @@ public class Event {
 
     public void setEventDesc(String eventDesc) {
         this.eventDesc = eventDesc;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 }
