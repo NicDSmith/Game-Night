@@ -1,7 +1,9 @@
 package com.nicdsmith.test.gamenight;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -58,12 +60,26 @@ public class MainActivity extends AppCompatActivity{
     @Override
     protected void onResume() {
         super.onResume();
-        datasource = new EventDataSource(this);
-        datasource.open();
-        List<Event> eventList = datasource.getAllEvents();
+
+        new AsyncTask<Context, Void, List<Event>>() {
+            @Override
+            protected List<Event> doInBackground(Context... context) {
+                datasource = new EventDataSource(context[0]);
+                datasource.open();
+                List<Event> eventList = datasource.getAllEvents();
+                return eventList;
+            }
+
+            @Override
+            protected void onPostExecute(List<Event> events) {
+                updateAdapter(events);
+            }
+        }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, this);
+    }
+
+    protected void updateAdapter(List<Event> eventList){
         mAdapter.setData(eventList);
-
-
+        Log.i(TAG, "updateAdapter: eventlist " + eventList.toString());
     }
 
 

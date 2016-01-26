@@ -1,7 +1,7 @@
 package com.nicdsmith.test.gamenight;
 
 /**
- * Created by nicsmith on 1/10/16.
+ * Created by nicsmith on 1/10/16
  */
 //defines our event object with setters and getters as well as a constructor
 public class Event {

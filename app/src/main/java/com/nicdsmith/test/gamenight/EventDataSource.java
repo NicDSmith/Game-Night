@@ -11,12 +11,19 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 public class EventDataSource {
 
     // Database fields
     private static SQLiteDatabase database;
     private SQLiteHelper dbHelper;
+    private final int eventIDColumnIndex = 0;
+    private final int eventTitleColumnIndex = 1;
+    private final int eventDescColumnIndex = 2;
+    private static final String TAG = EventDataSource.class.getSimpleName();
+
+
     private String[] allColumns = { SQLiteHelper.COLUMN_ID,
             SQLiteHelper.COLUMN_EVENT_TITLE, SQLiteHelper.COLUMN_EVENT_DISCRIPTION };
 
@@ -36,7 +43,7 @@ public class EventDataSource {
         return database;
     }
 
-    public Event createEvent(String eventTitle,String eventDesc) {
+    public void createEvent(String eventTitle,String eventDesc) {
         ContentValues values = new ContentValues();
         values.put(SQLiteHelper.COLUMN_EVENT_TITLE, eventTitle);
         values.put(SQLiteHelper.COLUMN_EVENT_DISCRIPTION, eventDesc);
@@ -44,20 +51,13 @@ public class EventDataSource {
 
         long insertId = database.insert(SQLiteHelper.TABLE_NAME, null,
                 values);
+        Log.i(TAG, "createEvent: insertID = " + insertId);
 
-        Cursor cursor = database.query(SQLiteHelper.TABLE_NAME,
-                allColumns, SQLiteHelper.COLUMN_ID + " = " + insertId, null,
-                null, null, null);
 
-        cursor.moveToFirst();
-        Event newEvent = cursorToEvent(cursor);
-        cursor.close();
-        return newEvent;
     }
 
     public void deleteEvent(Event event) {
         long id = event.getId();
-        System.out.println("event deleted with id: " + id);
         database.delete(SQLiteHelper.TABLE_NAME, SQLiteHelper.COLUMN_ID
                 + " = " + id, null);
     }
@@ -67,23 +67,24 @@ public class EventDataSource {
 
         Cursor cursor = database.query(SQLiteHelper.TABLE_NAME,
                 allColumns, null, null, null, null, null);
+        try {
 
-        cursor.moveToFirst();
-        while (!cursor.isAfterLast()) {
-            Event event = cursorToEvent(cursor);
-            events.add(event);
-            cursor.moveToNext();
+            while (cursor.moveToNext()) {
+                Event event = cursorToEvent(cursor);
+                events.add(event);
+            }
+        } finally {
+            //closing the cursor
+            cursor.close();
         }
-        // make sure to close the cursor
-        cursor.close();
         return events;
     }
 
     private Event cursorToEvent(Cursor cursor) {
         Event event = new Event();
-        event.setId(cursor.getLong(0));
-        event.setEventTitle(cursor.getString(1));
-        event.setEventDesc(cursor.getString(2));
+        event.setId(cursor.getLong(eventIDColumnIndex));
+        event.setEventTitle(cursor.getString(eventTitleColumnIndex));
+        event.setEventDesc(cursor.getString(eventDescColumnIndex));
 
         return event;
     }

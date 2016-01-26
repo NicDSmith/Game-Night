@@ -18,23 +18,23 @@ package com.nicdsmith.test.gamenight;
         private static final String DATABASE_NAME = "events.db";
         private static final int DATABASE_VERSION = 1;
 
-        private Context mCxt;
+        private Context mContext;
 
         // Database creation sql statement
-        private static final String DATABASE_CREATE = "create table "
+        private static final String DATABASE_CREATE = "CREATE TABLE "
                 + TABLE_NAME + "(" + COLUMN_ID
-                + " integer primary key autoincrement, " + COLUMN_EVENT_TITLE + " text not null," + COLUMN_EVENT_DISCRIPTION
-                + " text not null);";
+                + " INTEGER PRIMARY KEY AUTOINCREMENT, " + COLUMN_EVENT_TITLE + " TEXT NOT NULL," + COLUMN_EVENT_DISCRIPTION
+                + " TEXT NOT NULL);";
 
         private SQLiteHelper(Context context) {
             super(context, DATABASE_NAME, null, DATABASE_VERSION);
-            this.mCxt = context;
+            this.mContext = context;
         }
 
-        public static SQLiteHelper getInstance(Context ctx){
+        public static SQLiteHelper getInstance(Context context){
 
             if (mInstance == null) {
-                mInstance = new SQLiteHelper(ctx.getApplicationContext());
+                mInstance = new SQLiteHelper(context.getApplicationContext());
             }
             return mInstance;
         }
