@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
@@ -66,8 +67,8 @@ public class MainActivity extends AppCompatActivity{
             protected List<Event> doInBackground(Context... context) {
                 datasource = new EventDataSource(context[0]);
                 datasource.open();
-                List<Event> eventList = datasource.getAllEvents();
-                return eventList;
+                return datasource.getAllEvents();
+
             }
 
             @Override

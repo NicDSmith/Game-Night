@@ -7,6 +7,9 @@ package com.nicdsmith.test.gamenight;
 public class Event {
     String eventTitle;
     String eventDesc;
+    long startDate;
+    long endDate;
+    int eventCycleLength;
     long id;
 
     public Event(){}
@@ -29,6 +32,30 @@ public class Event {
 
     public void setEventDesc(String eventDesc) {
         this.eventDesc = eventDesc;
+    }
+
+    public long getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(long startDate) {
+        this.startDate = startDate;
+    }
+
+    public long getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(long endDate) {
+        this.endDate = endDate;
+    }
+
+    public int getEventCycleLength() {
+        return eventCycleLength;
+    }
+
+    public void setEventCycleLength(int eventCycleLength) {
+        this.eventCycleLength = eventCycleLength;
     }
 
     public long getId() {
