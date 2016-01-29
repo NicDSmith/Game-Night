@@ -6,11 +6,13 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
 public class EventCreationActivity extends AppCompatActivity {
 
+    private static final String TAG = EventCreationActivity.class.getSimpleName();
     Intent intent = getIntent();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,20 +21,24 @@ public class EventCreationActivity extends AppCompatActivity {
 
     }
     public void saveEvent(View view){
+        Log.i(TAG, "saveEvent: started");
         Intent intent = new Intent(this, MainActivity.class);
-        Bundle extras = new Bundle();
+
         EditText editText = (EditText) findViewById(R.id.event_title_capture);
-        String eventTitleCapture = editText.getText().toString();
+        String eventTitleText = editText.getText().toString();
+        Log.i(TAG, "saveEvent: string to be added " + eventTitleText);
 
         editText = (EditText) findViewById(R.id.event_desc_capture);
-        String eventDescCapture = editText.getText().toString();
+        String eventDescText = editText.getText().toString();
+        Log.i(TAG, "saveEvent: string to be added " + eventDescText);
 
-        extras.putString("EXTRA_EVENTTITLE",eventTitleCapture);
-        extras.putString("EXTRA_EVENTDESC", eventDescCapture);
+        EventDataSource dataSource = new EventDataSource(this);
+        dataSource.open();
 
-        intent.putExtras(extras);
-        setResult(RESULT_OK, intent);
+        dataSource.createEvent(eventTitleText, eventDescText);
+
         finish();
+        Log.i(TAG, "saveEvent: ended");
     }
 
 }

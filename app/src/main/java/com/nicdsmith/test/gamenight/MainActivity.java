@@ -1,7 +1,9 @@
 package com.nicdsmith.test.gamenight;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,11 +14,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 
+import java.util.List;
+import java.util.ListIterator;
+
 public class MainActivity extends AppCompatActivity{
     private RecyclerView mRecyclerView;
     private RecyclerViewAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private static final String TAG = MainActivity.class.getSimpleName();
+    private EventDataSource datasource;
 
 
 
@@ -39,6 +45,9 @@ public class MainActivity extends AppCompatActivity{
         mRecyclerView.setAdapter(mAdapter);
 
 
+
+
+
     }
 
     @Override
@@ -49,17 +58,30 @@ public class MainActivity extends AppCompatActivity{
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(requestCode == 0){
-            if(resultCode == RESULT_OK) {
-                //generates a temporary event with the information passes from the other activity
-                Event tempevent = new Event(data.getStringExtra("EXTRA_EVENTTITLE"), data.getStringExtra("EXTRA_EVENTDESC"));
+    protected void onResume() {
+        super.onResume();
 
-                //adds the new even to the dataset
-                mAdapter.appendToDataSet(tempevent);
+        new AsyncTask<Context, Void, List<Event>>() {
+            @Override
+            protected List<Event> doInBackground(Context... context) {
+                datasource = new EventDataSource(context[0]);
+                datasource.open();
+                List<Event> eventList = datasource.getAllEvents();
+                return eventList;
             }
-        }
+
+            @Override
+            protected void onPostExecute(List<Event> events) {
+                updateAdapter(events);
+            }
+        }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, this);
     }
+
+    protected void updateAdapter(List<Event> eventList){
+        mAdapter.setData(eventList);
+        Log.i(TAG, "updateAdapter: eventlist " + eventList.toString());
+    }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

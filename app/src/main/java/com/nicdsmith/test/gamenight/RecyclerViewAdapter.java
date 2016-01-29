@@ -41,6 +41,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         notifyDataSetChanged();
     }
 
+    public void setData(List<Event> eventList){
+        mDataset = eventList;
+        notifyDataSetChanged();
+    }
+
     @Override
     public RecyclerViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
                                                    int viewType) {
