@@ -3,6 +3,7 @@
     package="com.nicdsmith.test.gamenight">
 
     <application
+        android:name=".EventRotations"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -19,7 +20,15 @@
         <activity
             android:name=".EventCreationActivity"
             android:label="@string/title_activity_event_creation"
-            android:theme="@style/AppTheme"/>
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".FirstTimeLogIn"
+            android:label="@string/title_activity_first_time_log_in"
+            android:theme="@style/Theme.AppCompat.Translucent" />
+        <activity
+            android:name=".EventInformationViewer"
+            android:label="@string/title_activity_event_information_viewer"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
