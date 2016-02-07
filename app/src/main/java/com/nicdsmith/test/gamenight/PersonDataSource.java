@@ -66,6 +66,18 @@ public class PersonDataSource {
                 + " = " + id, null);
     }
 
+    public Person getPersonByID(long id){
+        String WHERE = SQLiteHelper.PERSONS_COLUMN_ID + " = " + id;
+
+        Cursor cursor = database.query(SQLiteHelper.PERSONS_TABLE_NAME,
+                allColumns, WHERE, null, null, null, null);
+        if(cursor.moveToFirst()) {
+            return cursorToPerson(cursor);
+        }else{
+            return null;
+        }
+    }
+
     public List<Person> getAllPersons() {
         List<Person> persons = new ArrayList<Person>();
 

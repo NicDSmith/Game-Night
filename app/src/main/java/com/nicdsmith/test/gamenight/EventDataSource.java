@@ -18,12 +18,7 @@ public class EventDataSource {
     // Database fields
     private static SQLiteDatabase database;
     private SQLiteHelper dbHelper;
-    private final int eventIDColumnIndex = 0;
-    private final int eventTitleColumnIndex = 1;
-    private final int eventDescColumnIndex = 2;
-    private final int eventStartDate = 3;
-    private final int eventEndDate = 4;
-    private final int eventCycleLength = 5;
+    
 
     private static final String TAG = EventDataSource.class.getSimpleName();
 
@@ -32,6 +27,7 @@ public class EventDataSource {
             SQLiteHelper.EVENTS_COLUMN_EVENT_TITLE, SQLiteHelper.EVENTS_COLUMN_EVENT_DISCRIPTION, SQLiteHelper.EVENTS_START_DATA, SQLiteHelper.EVENTS_END_DATA, SQLiteHelper.EVENTS_CYCLE_LENGTH };
 
     public EventDataSource(Context context) {
+        Log.i(TAG, "EventDataSource: ");
             dbHelper = SQLiteHelper.getInstance(context);
     }
 
@@ -47,18 +43,20 @@ public class EventDataSource {
         return database;
     }
 
-    public void createEvent(String eventTitle,String eventDesc, long eventStartDate, long eventEndDate, int eventCycleLength) {
+    public long createEvent(String eventTitle,String eventDesc, long eventStartDate, long eventEndDate, int eventCycleLength) {
+        Log.i(TAG, "createEvent: creating event");
         ContentValues values = new ContentValues();
         values.put(SQLiteHelper.EVENTS_COLUMN_EVENT_TITLE, eventTitle);
         values.put(SQLiteHelper.EVENTS_COLUMN_EVENT_DISCRIPTION, eventDesc);
         values.put(SQLiteHelper.EVENTS_START_DATA, eventStartDate);
         values.put(SQLiteHelper.EVENTS_END_DATA, eventEndDate);
-        values.put(SQLiteHelper.EVENTS_END_DATA, eventCycleLength);
+        values.put(SQLiteHelper.EVENTS_CYCLE_LENGTH, eventCycleLength);
 
 
         long insertId = database.insert(SQLiteHelper.EVENTS_TABLE_NAME, null,
                 values);
         Log.i(TAG, "createEvent: insertID = " + insertId);
+        return insertId;
 
 
     }
@@ -69,6 +67,17 @@ public class EventDataSource {
                 + " = " + id, null);
     }
 
+    public Event getEventByID(long id){
+        String WHERE = SQLiteHelper.EVENTS_COLUMN_ID + " = " + id;
+
+        Cursor cursor = database.query(SQLiteHelper.EVENTS_TABLE_NAME,
+                allColumns, WHERE, null, null, null, null);
+        if(cursor.moveToFirst()) {
+            return cursorToEvent(cursor);
+        }else{
+            return null;
+        }
+    }
     public List<Event> getAllEvents() {
         List<Event> events = new ArrayList<Event>();
 

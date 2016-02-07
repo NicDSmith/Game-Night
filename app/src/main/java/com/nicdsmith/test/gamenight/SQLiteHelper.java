@@ -47,15 +47,15 @@ package com.nicdsmith.test.gamenight;
         //Database creation sql statement for EVENT_PERSONS pivot table
         public static final String EVENT_PERSONS_TABLE_NAME = "event_persons";
         public static final String EVENT_PERSONS_PERSONS_COLUMN_ID = "persons_id";
-        public static final String EVENT_PERSON_EVENT_COLUMN_ID = "event_id";
+        public static final String EVENT_PERSONS_EVENT_COLUMN_ID = "event_id";
         public static final String PERSONS_POSITION = "person_position";
 
         private static final String EVENT_PERSONS_DATABASE_CREATE = "CREATE TABLE "
                 + EVENT_PERSONS_TABLE_NAME +
-                "(" + EVENT_PERSONS_PERSONS_COLUMN_ID + " INTEGER NOT NULL REFERENCES " + PERSONS_TABLE_NAME + "(" + PERSONS_COLUMN_ID + "), "
-                + EVENT_PERSON_EVENT_COLUMN_ID + " INTEGER NOT NULL REFERENCES " + EVENTS_TABLE_NAME + "(" + EVENTS_COLUMN_ID + "),"
+                "(" + EVENT_PERSONS_PERSONS_COLUMN_ID + " LONG NOT NULL REFERENCES " + PERSONS_TABLE_NAME + "(" + PERSONS_COLUMN_ID + "), "
+                + EVENT_PERSONS_EVENT_COLUMN_ID + " LONG NOT NULL REFERENCES " + EVENTS_TABLE_NAME + "(" + EVENTS_COLUMN_ID + "),"
                 + PERSONS_POSITION + " INTEGER," +
-                " PRIMARY KEY(" + EVENT_PERSONS_PERSONS_COLUMN_ID + "," + EVENT_PERSON_EVENT_COLUMN_ID +"));";
+                " PRIMARY KEY(" + EVENT_PERSONS_PERSONS_COLUMN_ID + "," + EVENT_PERSONS_EVENT_COLUMN_ID +"));";
 
 
         private static final String FILL_PEOPLE_TABLE_ADAM = "INSERT INTO " + PERSONS_TABLE_NAME + "(" + PERSONS_COLUMN_FIRST_NAME + "," + PERSONS_COLUMN_LAST_NAME +
@@ -64,6 +64,7 @@ package com.nicdsmith.test.gamenight;
                 ") VALUES ('Seen','Breaches');";
         private static final String FILL_PEOPLE_TABLE_JORDAN = "INSERT INTO " + PERSONS_TABLE_NAME + "(" + PERSONS_COLUMN_FIRST_NAME + "," + PERSONS_COLUMN_LAST_NAME +
                 ") VALUES ('Jaydan', 'Smavis');";
+
         private SQLiteHelper(Context context) {
             super(context, DATABASE_NAME, null, DATABASE_VERSION);
             this.mContext = context;
@@ -100,6 +101,9 @@ package com.nicdsmith.test.gamenight;
                     "Upgrading database from version " + oldVersion + " to "
                             + newVersion + ", which will destroy all old data");
             db.execSQL("DROP TABLE IF EXISTS " + EVENTS_TABLE_NAME);
+            db.execSQL("DROP TABLE IF EXISTS " + PERSONS_TABLE_NAME);
+            db.execSQL("DROP TABLE IF EXISTS " + EVENT_PERSONS_TABLE_NAME);
+
             onCreate(db);
         }
 

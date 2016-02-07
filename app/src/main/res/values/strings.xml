@@ -9,6 +9,13 @@
     <string name="event_desc_capture">Event Description</string>
     <string name="start_date">Start Date: 11/5/1955</string>
     <string name="end_date">End Date: 10/21/2015</string>
-
+    <string name="title_activity_first_time_log_in">Log In</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="log_in">Log In</string>
+    <string name="cycle_length">Cycle Length</string>
+    <string name="title_activity_event_information_viewer">eventInformationViewer</string>
+    <string name="start_date_view">Start Date</string>
+    <string name="end_date_view">End Date</string>
 
 </resources>

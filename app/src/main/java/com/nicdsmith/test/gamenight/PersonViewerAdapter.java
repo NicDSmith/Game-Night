@@ -1,22 +1,23 @@
 package com.nicdsmith.test.gamenight;
 
+/**
+ * Created by nicsmith on 2/6/16.
+ */
+
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
-import android.widget.TextView;
-
-import java.security.PublicKey;
 import java.util.ArrayList;
 import java.util.List;
+import android.widget.TextView;
 
 /**
  * Created by nicsmith on 1/28/16.
  */
 
-public class PersonPickerAdapter extends RecyclerView.Adapter<PersonPickerAdapter.ViewHolder> {
+public class PersonViewerAdapter extends RecyclerView.Adapter<PersonViewerAdapter.ViewHolder> {
     private List<Person> mDataset;
     List<Person> PersonsList = new ArrayList<Person>();
     private static final String TAG = MainActivity.class.getSimpleName();
@@ -30,26 +31,22 @@ public class PersonPickerAdapter extends RecyclerView.Adapter<PersonPickerAdapte
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         public View cardView;
-        public CheckBox checked;
+        public TextView personName;
 
         public ViewHolder(View v) {
             super(v);
             cardView = v;
 
-            checked = (CheckBox) cardView.findViewById(R.id.person_selected);
+            personName = (TextView) cardView.findViewById(R.id.show_person);
         }
 
 
     }
 
 
-    public void setOnClickListener(View.OnClickListener clickListener){
-        this.clickListener = clickListener;
-    }
 
-    public PersonPickerAdapter() {
+    public PersonViewerAdapter() {
         mDataset = new ArrayList<Person>();
-        personsChecked = new ArrayList<>();
     }
 
     public void appendToDataSet(Person person){
@@ -66,11 +63,10 @@ public class PersonPickerAdapter extends RecyclerView.Adapter<PersonPickerAdapte
         return mDataset.get(personID);
     }
     @Override
-    public PersonPickerAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
+    public PersonViewerAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
                                                              int viewType) {
         // create a new view
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.name_list, parent, false);
-        v.setOnClickListener(clickListener);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.event_name_view, parent, false);
         ViewHolder vh = new ViewHolder(v);
         return vh;
     }
@@ -82,25 +78,8 @@ public class PersonPickerAdapter extends RecyclerView.Adapter<PersonPickerAdapte
         //inserts information in to the Person title text field on the card\
         final Person tempPerson = mDataset.get(position);
         String personName = tempPerson.getfirstName() + " " + tempPerson.getlastName();
-        holder.checked.setText(personName);
-        holder.checked.setChecked(personsChecked.contains(tempPerson));
-        holder.checked.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(holder.checked.isChecked()){
-                    personsChecked.add(tempPerson);
-                }else{
-                    personsChecked.remove(tempPerson);
-                }
+        holder.personName.setText(personName);
 
-            }
-        });
-
-
-    }
-
-    public List<Person> getCheckedPersons(){
-        return personsChecked;
     }
 
     // Return the size of your dataset (invoked by the layout manager)

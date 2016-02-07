@@ -25,5 +25,12 @@
                 android:layout_height="wrap_content"
                 android:text="event desc"
                 />
+
+
         </LinearLayout>
+    <TextView android:id="@+id/event_id"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="invisible"
+        />
     </android.support.v7.widget.CardView>
